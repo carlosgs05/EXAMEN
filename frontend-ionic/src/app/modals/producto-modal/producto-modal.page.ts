@@ -166,4 +166,12 @@ export class ProductoModalPage implements OnInit {
     });
     await alert.present();
   }
+
+  // En productos.page.ts
+handleImageError(event: any, producto: any) {
+  console.error('Error cargando imagen para producto:', producto.nombre_producto);
+  // Puedes establecer una imagen por defecto o simplemente dejar que se muestre el icono
+  event.target.style.display = 'none';
+  // El icono se mostrará automáticamente porque la imagen falló
+}
 }

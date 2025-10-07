@@ -18,7 +18,7 @@
   --background: transparent;
   
   .header-toolbar {
-    --background: rgba(255, 255, 255, 0.1);
+    --background: rgba(131, 122, 212, 0.9);
     backdrop-filter: blur(20px);
     --border-width: 0;
     --min-height: 90px;
@@ -336,27 +336,41 @@
 
         .producto-main-content {
           display: grid;
-          grid-template-columns: auto 1fr auto auto;
+          grid-template-columns: 120px 1fr auto auto; // Imagen más grande
           align-items: center;
-          gap: 20px;
+          gap: 25px;
 
+          // IMAGEN MÁS GRANDE - ESTILOS ACTUALIZADOS
           .producto-avatar {
             .producto-avatar-circle {
-              width: 56px;
-              height: 56px;
+              width: 100px;  // Tamaño aumentado
+              height: 100px; // Tamaño aumentado
               border-radius: 50%;
               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
               display: flex;
               align-items: center;
               justify-content: center;
-              color: white;
-              font-weight: 700;
-              font-size: 1.2rem;
-              border: 2px solid rgba(255, 255, 255, 0.2);
+              border: 3px solid rgba(255, 255, 255, 0.3);
               backdrop-filter: blur(10px);
+              overflow: hidden;
+              position: relative;
+              box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
               
-              ion-icon {
-                font-size: 1.5rem;
+              // Cuando hay imagen, quitar el fondo gradiente
+              &:has(.producto-image) {
+                background: transparent;
+                border: 3px solid rgba(255, 255, 255, 0.2);
+              }
+              
+              .producto-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+              }
+              
+              .producto-default-icon {
+                font-size: 2.5rem; // Icono más grande
                 color: white;
               }
             }
@@ -537,85 +551,6 @@
   }
 }
 
-// Form Styles
-.producto-form {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-.form-item {
-  --background: transparent;
-  --border-color: rgba(255, 255, 255, 0.3);
-  margin-bottom: 20px;
-  border-radius: 12px;
-
-  ion-input,
-  ion-textarea,
-  ion-select {
-    --color: white;
-    --placeholder-color: rgba(255, 255, 255, 0.7);
-  }
-
-  ion-label {
-    color: white !important;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-}
-
-.form-row {
-  display: flex;
-  gap: 15px;
-
-  .half {
-    flex: 1;
-  }
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 0;
-  }
-}
-
-.toggle-item {
-  --background: transparent;
-  --border-color: rgba(255, 255, 255, 0.3);
-
-  ion-toggle {
-    --background: rgba(255, 255, 255, 0.2);
-    --background-checked: #4cd964;
-    --handle-background: white;
-    --handle-background-checked: white;
-  }
-
-  ion-label {
-    color: white !important;
-    font-weight: 600;
-  }
-}
-
-.form-actions {
-  display: flex;
-  gap: 15px;
-  margin-top: 30px;
-
-  .cancel-button {
-    --border-color: rgba(255, 255, 255, 0.3);
-    --color: white;
-    flex: 1;
-  }
-
-  .save-button {
-    --background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --color: white;
-    flex: 2;
-  }
-}
-
 // Animations
 .hero-section,
 .stats-grid,
@@ -634,7 +569,7 @@
   }
 }
 
-// Responsive Design
+// Responsive Design MEJORADO
 @media (min-width: 768px) {
   .dashboard-container {
     max-width: 1800px;
@@ -725,14 +660,15 @@
           padding: 28px;
           
           .producto-main-content {
+            grid-template-columns: 140px 1fr auto auto; // Imagen aún más grande en desktop
+            
             .producto-avatar {
               .producto-avatar-circle {
-                width: 64px;
-                height: 64px;
-                font-size: 1.3rem;
+                width: 120px; // Más grande en desktop
+                height: 120px; // Más grande en desktop
                 
-                ion-icon {
-                  font-size: 1.7rem;
+                .producto-default-icon {
+                  font-size: 3rem;
                 }
               }
             }
@@ -859,7 +795,7 @@
           padding: 20px;
           
           .producto-main-content {
-            grid-template-columns: auto 1fr;
+            grid-template-columns: 80px 1fr;
             grid-template-areas: 
               "avatar info"
               "meta actions";
@@ -869,12 +805,11 @@
               grid-area: avatar;
               
               .producto-avatar-circle {
-                width: 50px;
-                height: 50px;
-                font-size: 1.1rem;
+                width: 70px; // Tamaño reducido para móviles pero aún grande
+                height: 70px; // Tamaño reducido para móviles pero aún grande
                 
-                ion-icon {
-                  font-size: 1.3rem;
+                .producto-default-icon {
+                  font-size: 1.8rem;
                 }
               }
             }

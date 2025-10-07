@@ -210,4 +210,11 @@ export class ProductosPage implements OnInit {
     });
     await alert.present();
   }
+
+  handleImageError(event: any, producto: any) {
+  console.error('Error loading image for product:', producto.nombre_producto);
+  // Puedes establecer una imagen por defecto o simplemente dejar que muestre el icono
+  event.target.style.display = 'none';
+  // El icono se mostrará automáticamente porque la imagen falló
+}
 }

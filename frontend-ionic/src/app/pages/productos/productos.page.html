@@ -1,28 +1,31 @@
-<ion-content [fullscreen]="true" class="productos-background">
-  <!-- Header con glass effect -->
-  <ion-header [translucent]="true" class="dashboard-header">
-    <ion-toolbar class="header-toolbar">
-      <ion-buttons slot="start">
-        <ion-button (click)="goBack()" fill="clear" class="back-button">
-          <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title class="header-title">Productos</ion-title>
-      
-      <ion-buttons slot="end">
-        <ion-button (click)="logout()" fill="clear" class="logout-button">
-          <ion-icon name="log-out" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-header [translucent]="true" class="dashboard-header">
+  <ion-toolbar class="header-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" class="back-button">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-title class="header-title">
+      Gestión de<br>Productos
+    </ion-title>
 
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()" class="logout-button">
+        <ion-icon name="log-out" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="productos-background">
   <div class="dashboard-container">
+    
     <!-- Hero Section -->
     <div class="hero-section">
       <div class="welcome-content">
-        <h1 class="welcome-title">Gestión de</h1>
-        <h2 class="user-name">Productos</h2>
+        <h2 class="welcome-title">Gestión de</h2>
+        <h1 class="user-name">Productos</h1>
         <p class="welcome-subtitle">Administra tu catálogo de productos</p>
       </div>
       <div class="user-avatar">
@@ -32,11 +35,11 @@
       </div>
     </div>
 
-    <!-- Stats Cards Grid -->
+    <!-- Stats Grid -->
     <div class="stats-grid">
-      <ion-card class="stat-card glass-effect" (click)="loadProductos()">
+      <ion-card class="stat-card glass-effect">
         <div class="stat-icon primary">
-          <ion-icon name="refresh"></ion-icon>
+          <ion-icon name="cube"></ion-icon>
         </div>
         <div class="stat-content">
           <h3 class="stat-value">{{ productos.length }}</h3>
@@ -105,29 +108,43 @@
         <div *ngIf="!isLoading && productos.length > 0" class="productos-list">
           <div *ngFor="let producto of productos" class="producto-card glass-effect">
             <div class="producto-main-content">
-              <!-- Icono del Producto -->
-              <div class="producto-icon">
-                <div class="producto-icon-circle">
-                  <ion-icon name="cube"></ion-icon>
+              
+              <!-- Imagen del Producto o Icono por defecto - TAMAÑO AUMENTADO -->
+              <div class="producto-avatar">
+                <div class="producto-avatar-circle">
+                  <!-- Mostrar imagen si existe y es válida -->
+                  <img 
+                    *ngIf="producto.imagen && producto.imagen !== '' && producto.imagen !== null" 
+                    [src]="producto.imagen" 
+                    [alt]="producto.nombre_producto"
+                    class="producto-image"
+                    (error)="handleImageError($event, producto)"
+                    loading="lazy">
+                  <!-- Mostrar icono por defecto si no hay imagen -->
+                  <ion-icon 
+                    *ngIf="!producto.imagen || producto.imagen === '' || producto.imagen === null" 
+                    name="cube"
+                    class="producto-default-icon">
+                  </ion-icon>
                 </div>
               </div>
-              
+
               <!-- Información Principal -->
               <div class="producto-info">
                 <h2 class="producto-name">{{ producto.nombre_producto }}</h2>
                 <p class="producto-codigo">
-                  Código: {{ producto.codigo }}
+                  Código: {{ producto.codigo || 'N/A' }}
                 </p>
-                
+
                 <div class="producto-details">
                   <div class="details-row">
                     <div class="detail-item">
                       <ion-icon name="pricetag" class="detail-icon price"></ion-icon>
-                      <span class="detail-text">${{ producto.precio }}</span>
+                      <span class="detail-text">${{ producto.precio | number:'1.2-2' }}</span>
                     </div>
                     <div class="detail-item">
                       <ion-icon name="trending-up" class="detail-icon stock"></ion-icon>
-                      <span class="detail-text">{{ producto.stock }} unidades</span>
+                      <span class="detail-text">{{ producto.stock }} {{ producto.unidad_medida || 'unidades' }}</span>
                     </div>
                   </div>
                   <div class="detail-item full-width">
@@ -146,7 +163,7 @@
                   </div>
                 </div>
                 <div class="categoria-container">
-                  <span class="categoria-text">{{ producto.categoria || 'General' }}</span>
+                  <span class="categoria-text">{{ producto.marca || 'General' }}</span>
                 </div>
               </div>
 
